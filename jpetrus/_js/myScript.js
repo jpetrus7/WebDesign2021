@@ -18,6 +18,7 @@
 function draw() {
     var canvas = document.getElementById('canvas');
     if (canvas.getContext) {
+      console.log("this thinng evaluated to true...")
       var ctx = canvas.getContext('2d');
   
       ctx.beginpath();
