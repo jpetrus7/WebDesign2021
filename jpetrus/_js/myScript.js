@@ -15,18 +15,34 @@
 // ctx.fillStyle = 'green';
 // ctx.fillRect(10, 10, 150, 100);
 
-function draw() {
-    var canvas = document.getElementById('canvas');
-    if (canvas.getContext) {
-      console.log("this thinng evaluated to true...")
-      var ctx = canvas.getContext('2d');
-  
-      ctx.beginpath();
-      ctx.fillRect(25, 25, 100, 100);
-      ctx.clearRect(45, 45, 60, 60);
-      ctx.strokeRect(50, 50, 50, 50);
+// Writing a program that creates rock paper scissors logic using a circle, square, and triangle
+
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+function drawTriangle() {
+      ctx.beginPath();
+      ctx.moveTo(75, 50);
+      ctx.lineTo(100, 75);
+      ctx.lineTo(100, 25);
       ctx.fill();
     }
-  }
-  draw();
 
+  function drawSquare(){
+    ctx.fillRect(25, 25, 100, 100);
+    ctx.clearRect(45, 45, 60, 60);
+    ctx.strokeRect(50, 50, 50, 50);
+  }
+  function drawCircle(){
+    ctx.beginPath();
+    ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+    ctx.stroke();
+  }
+
+  function main(){
+    drawTriangle();
+    drawSquare();
+    drawCircle();
+  }
+
+main();

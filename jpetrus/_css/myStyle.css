@@ -1,13 +1,19 @@
 /* This is a CSS comment */
+
+/* this is an ID */
 #canvas {
     border:1px solid #000000;
 }
+/* this is a class... */
 .container{
     margin: 0 auto;
     width: 2000px;
     height: 1000px;
 }
 .blueblock {
+    position: absolute;
+    top: 45px;
+    float: left;
     background-color: #0000FF;
     width: 700px;
     height: 500px;
