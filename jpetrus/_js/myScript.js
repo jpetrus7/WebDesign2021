@@ -17,9 +17,11 @@
 
 // Writing a program that creates rock paper scissors logic using a circle, square, and triangle
 
+// Initializing variables to create a canvas 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
+// Initialize a function to draw a triangle on the canvas
 function drawTriangle() {
       ctx.beginPath();
       ctx.moveTo(75, 50);
@@ -27,18 +29,19 @@ function drawTriangle() {
       ctx.lineTo(100, 25);
       ctx.fill();
     }
-
+// Initizlize a function to draw a square on the canvas
   function drawSquare(){
     ctx.fillRect(25, 25, 100, 100);
     ctx.clearRect(45, 45, 60, 60);
     ctx.strokeRect(50, 50, 50, 50);
   }
+//  Inititialize a function to draw a circle on the canvas
   function drawCircle(){
     ctx.beginPath();
     ctx.arc(100, 75, 50, 0, 2 * Math.PI);
     ctx.stroke();
   }
-
+// Tell the code to draw the shapes which are variables
   function main(){
     drawTriangle();
     drawSquare();
