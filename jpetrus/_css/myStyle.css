@@ -1,10 +1,13 @@
-/* This is a CSS comment */
+/* Making a CSS comment */
+p {
+    color: red;
+}
 
-/* this is an ID */
+/* Creating an ID */
 #canvas {
     border:1px solid #000000;
 }
-/* this is a class... */
+/* Creating a class */
 .container{
     margin: 0 auto;
     width: 2000px;

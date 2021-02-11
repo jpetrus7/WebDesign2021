@@ -1,27 +1,61 @@
-// test code
-
-// let myNum = 6;
-// const myName = "Chris";
-// alert(myName);
-// alert(myNum);
-// myNum = 25;
-// alert(myNum);
-
-// add a canvas to the page
-
-
-// const canvas = document.getElementById('canvas');
-// const ctx = canvas.getContext('2d');
-// ctx.fillStyle = 'green';
-// ctx.fillRect(10, 10, 150, 100);
-
 // Writing a program that creates rock paper scissors logic using a circle, square, and triangle
+//global variables
+let player;
+let mouseCoords = [];
 
-// Initializing variables to create a canvas 
+
+ // Introducing objects
+ //Function to draw a circle on the canvas
+ var myCircle = {
+  x: 100,
+  y: 75,
+  w: 100,
+  radius: 50,
+};
+
+// Shows mouse position when clicked
+
+addEventListener('mousedown', mouseClick);
+
+function mouseClick(e) {
+  console.log( `
+    Screen X/Y: ${e.screenX}, ${e.screenY}
+	Client X/Y: ${e.clientX}, ${e.clientY}`);
+	mouseCoords =  [e.clientX, e.clientY];
+  if (myCircle.x < mouseCoords[0] && myCircle.x + myCircle.w > mouseCoords[0] -25){
+    console.log("inside");
+
+  }
+}
+
+
+//initializing variables to create a canvas 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
-// Initialize a function to draw a triangle on the canvas
+//set choices
+let choices =  ["rock", "paper", "scissors"];
+
+function randChoice(x){
+    return Math.floor(Math.random()*x);
+}
+
+let cpuChoice = 0;
+// let cpuChoice = randChoice(choices.length);
+
+console.log(choices[cpuChoice]);
+
+// if (cpuChoice == 0){
+//   drawCircle();
+// }
+// else if (cpuChoice == 1){
+//   drawSquare();
+// }
+// else {
+//   drawTriangle();
+// }
+
+//Function to draw a triangle on the canvas
 function drawTriangle() {
       ctx.beginPath();
       ctx.moveTo(75, 50);
@@ -29,23 +63,28 @@ function drawTriangle() {
       ctx.lineTo(100, 25);
       ctx.fill();
     }
-// Initizlize a function to draw a square on the canvas
+
+//Function to draw a square on the canvas
   function drawSquare(){
     ctx.fillRect(25, 25, 100, 100);
     ctx.clearRect(45, 45, 60, 60);
     ctx.strokeRect(50, 50, 50, 50);
   }
-//  Inititialize a function to draw a circle on the canvas
+
+ 
+
+console.log(myCircle.x);
+
   function drawCircle(){
-    ctx.beginPath();
-    ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+    //ctx.beginPath();
+    ctx.arc(myCircle.x, myCircle.y, myCircle.radius, 0, 2 * Math.PI);
     ctx.stroke();
   }
-// Tell the code to draw the shapes which are variables
+drawCircle();
   function main(){
-    drawTriangle();
-    drawSquare();
-    drawCircle();
   }
 
 main();
+
+
+
