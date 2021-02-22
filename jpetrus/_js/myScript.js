@@ -22,7 +22,7 @@ function mouseClick(e) {
     Screen X/Y: ${e.screenX}, ${e.screenY}
 	Client X/Y: ${e.clientX}, ${e.clientY}`);
 	mouseCoords =  [e.clientX, e.clientY];
-  if (myCircle.x < mouseCoords[0] && myCircle.x + myCircle.w > mouseCoords[0] -25){
+  if ((myCircle.x - myCircle.radius+10) < mouseCoords[0] && (myCircle.x + myCircle.radius+10) > mouseCoords[0] && (myCircle.y - myCircle.radius+10) < mouseCoords[1] && (myCircle.y + myCircle.radius+10) > mouseCoords[1]){
     console.log("inside");
 
   }
