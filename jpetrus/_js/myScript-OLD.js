@@ -1,8 +1,6 @@
-//test code
-
-// I can initialize variables with numbers, strings, booleans etc.
+// I can initialize variables with booleans, number, strings, etc.
 // let myNum = 6;
-// const myName = "Chris";
+// const myName = "Josh";
 // alert(myName);
 // alert(myNum);
 // myNum = 25;
