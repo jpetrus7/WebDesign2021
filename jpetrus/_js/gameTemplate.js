@@ -2,7 +2,7 @@
 // https://eloquentjavascript.net/code/chapter/17_canvas.js
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event
 
-//Initialize variables to create a canvas
+//Initialize GLOBAL variables to create a canvas
 let canvasDiv;
 let canvas;
 let ctx;
@@ -11,6 +11,7 @@ let initialized = false;
 // Mouse position is found when clicked
 let mouseX = 0;
 let mouseY = 0;
+// Object setting the position of the mouse
 let mousePos = {
   x: 0,
   y: 0
@@ -24,14 +25,14 @@ let mouseClickY = 0;
 
 
 function init() {
-  // Create a new element
+  // Creating a new div element
   canvasDiv = document.createElement("div");
   canvasDiv.id = "chuck";
   // Adding more content 
   canvas = document.createElement('canvas');
-  // Add the text node to div
+  // Adding the text node to div
   canvasDiv.appendChild(canvas);
-  // Add the element and its content into the DOM
+  // Adding the element and its content into the DOM
   const currentDiv = document.getElementById("div1");
   document.body.insertBefore(canvasDiv, currentDiv);
   canvas.width = 500;
@@ -42,7 +43,7 @@ function init() {
   initialized = true;
 }
 
-// Create an object to hold attributes in order to draw a shape on the canvas
+// Create an object to hold attributes, to draw a shape on the canvas
 // More comments
 let mySquare = {
   w: 50,
@@ -90,9 +91,12 @@ function collide(a, b) {
 
 // Udates all the elements on the canvas
 function update(mod) {
-    mySquare.color = 'red';
-  }
-
+    if (collide(mySquare, mousePos)) {
+      mySquare.color = 'red';
+    }
+    else{
+      mySquare.color = 'orange';
+    }
   mySquare.x += mySquare.vx * mod;
   mySquare.y += mySquare.vy * mod;
   if (mySquare.x + mySquare.w >= canvas.width || mySquare.x <= 0) {
