@@ -43,27 +43,86 @@ function init() {
   initialized = true;
 }
 
-// Create an object to hold attributes, to draw a shape on the canvas
+// Creating an object to hold attributes to be able to draw a shape on canvas
 // More comments
-let mySquare = {
+let oSquare = {
+  w: 50,
+  h: 50,
+  x: 300,
+  y: 300,
+  vx: 0.1,
+  vy: 0.1,
+  color: 'black'
+};
+
+// Creating a constructor function that allows you to create more that one type of object
+function fSquare(w, h, x, y, vx, vy, c) {
+  this.w = w;
+  this.h = h;
+  this.x = x;
+  this.y = y;
+  this.vx = vx;
+  this.vy = vy;
+  this.color = c;
+  this.draw = function () {
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.strokeRect(this.x, this.y, this.w, this.h);
+    };
+}
+
+// Creating a JS Class that allows you to create more objects from a 'template' using 'new'
+class cSquare {
+  constructor(w, h, x, y, vx, vy, c) {
+    this.w = w;
+  this.h = h;
+  this.x = x;
+  this.y = y;
+  this.vx = vx;
+  this.vy = vy;
+  this.color = c;
+  }
+  update(){
+    // Drawing using variables
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.w, this.h);
+    ctx.strokeRect(this.x, this.y, this.w, this.h);
+  }
+}
+
+// Creating a new object from an existing object cSquare
+let newSquare = Object.create(oSquare);
+
+// Creating an instance of a constructor FUNCTION fSquare
+let oneSquare = new fSquare(25, 25, 0, 0, 0, 0, 'red');
+let twoSquare = new fSquare(25, 25, 150, 25, 0, 0, 'green');
+let threeSquare = new fSquare(25, 25, 0, 0, 0, 0, 'blue');
+let fourSquare = new cSquare(25, 25, 0, 0, 0, 0, 'blue');
+
+
+// Creating an instance of  a class cSquare
+let anotherSquare = new cSquare(40, 40, 25, 25);
+
+
+let myCircle = {
+  r: 25,
   w: 50,
   h: 50,
   x: 150,
   y: 200,
   vx: 0.1,
   vy: 0.1,
-  color: 'black'
+  color: 'grey',
+  draw: function () {
+    ctx.fillStyle = myCircle.color;
+    ctx.beginPath();
+    ctx.arc(myCircle.x, myCircle.y, myCircle.r, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+  }
 };
-
-// Mouse position is found when clicked
-addEventListener('mousemove', e => {
-  mouseX = e.offsetX;
-  mouseY = e.offsetY;
-  mousePos = {
-    x: mouseX,
-    y: mouseY
-  };
-});
 
 // Mouse position is found when clicked
 addEventListener('mousedown', mouseClick);
@@ -141,6 +200,9 @@ function draw() {
   drawText('black', "24px Helvetica", "left", "top", "mousepos: " + mouseX + " " + mouseY, 0, 0);
   drawText('black', "24px Helvetica", "left", "top", "mouseclick: " + mouseClickX + " " + mouseClickY, 0, 32);
   drawSquare();
+  threeSquare.draw();
+  oneSquare.draw();
+  twoSquare.draw();
 }
 
 // Setting variables
@@ -162,5 +224,5 @@ function main() {
   }
   then = now;
   requestAnimationFrame(main);
-}
+  }
 }
