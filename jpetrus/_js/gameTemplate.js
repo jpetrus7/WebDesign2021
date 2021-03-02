@@ -163,3 +163,4 @@ function main() {
   then = now;
   requestAnimationFrame(main);
 }
+}
