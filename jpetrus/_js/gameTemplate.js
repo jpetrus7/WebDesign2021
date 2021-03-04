@@ -82,6 +82,23 @@ class cSquare {
   this.vy = vy;
   this.color = c;
   }
+  moveinput() {
+    if ('w' in keysDown || 'W' in keysDown) { // Player control
+        this.vx = 0;
+        this.vy = -1;
+        console.log('w!!!');
+    } else if ('s' in keysDown || 'S' in keysDown) { // Player control
+        this.vx = 0;
+        this.vy = 1;
+
+    } else if ('a' in keysDown || 'A' in keysDown) { // Player control
+        this.vy = 0;
+        this.vx = -1;
+
+    } else if ('d' in keysDown || 'D' in keysDown) { // Player control
+        this.vy = 0;
+        this.vx = 1;
+    }
   update(){
     // Drawing using variables
   }
@@ -92,18 +109,18 @@ class cSquare {
   }
 }
 
-// Creating a new object from an existing object cSquare
+// Creating a new object from an existing object oSquare
 let newSquare = Object.create(oSquare);
 
 // Creating an instance of a constructor FUNCTION fSquare
 let oneSquare = new fSquare(25, 25, 0, 0, 0, 0, 'red');
 let twoSquare = new fSquare(25, 25, 150, 25, 0, 0, 'green');
 let threeSquare = new fSquare(25, 25, 0, 0, 0, 0, 'blue');
-let fourSquare = new cSquare(25, 25, 0, 0, 0, 0, 'blue');
+let fourSquare = new CSquare(25, 25, 0, 0, 0, 0, 'blue');
 
 
 // Creating an instance of  a class cSquare
-let anotherSquare = new cSquare(40, 40, 25, 25);
+let anotherSquare = new CSquare(40, 40, 25, 25);
 
 
 let myCircle = {
@@ -136,7 +153,7 @@ function mouseClick(e) {
     y: mouseClickY
   };
 }
-
+// Functions collide with variables a,b
 function collide(a, b) {
   if (a.x <= b.x &&
     b.x <= a.x + a.w &&
