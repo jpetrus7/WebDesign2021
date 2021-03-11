@@ -6,6 +6,13 @@
 let canvasDiv;
 let canvas;
 let ctx;
+let WIDTH = 500;
+let HEIGHT= 500;
+
+//Container array for mobs or enemies
+let mobs = [];
+
+// Lets you know if game is initialized or not
 let initialized = false;
 
 // Mouse position is found when clicked
@@ -43,64 +50,97 @@ function init() {
   initialized = true;
 }
 
-// Creating an object to hold attributes to be able to draw a shape on canvas
-// More comments
-let oSquare = {
-  w: 50,
-  h: 50,
-  x: 300,
-  y: 300,
-  vx: 0.1,
-  vy: 0.1,
-  color: 'black'
-};
+// Creating object with keys being pressed
 
-// Creating a constructor function that allows you to create more that one type of object
-function fSquare(w, h, x, y, vx, vy, c) {
-  this.w = w;
-  this.h = h;
-  this.x = x;
-  this.y = y;
-  this.vx = vx;
-  this.vy = vy;
-  this.color = c;
-  this.draw = function () {
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.w, this.h);
-      ctx.strokeRect(this.x, this.y, this.w, this.h);
-    };
+let keysDown = {};
+
+addEventListener("keydown", function (e) {
+    keysDown[e.key] = true;
+}, false);
+
+addEventListener("keyup", function (e) {
+    // if (e.key == " ") {
+    //     player.canjump = true;
+    //     player.jumps++;
+    // }
+    delete keysDown[e.key];
+
+}, false);
+
+
+function init() {
+  // Creatin a new div element
+  canvasDiv = document.createElement("div");
+  canvasDiv.id = "chuck";
+  // Giving the object some content
+  canvas = document.createElement('canvas');
+  // Adding the text node to the newly created div element
+  canvasDiv.appendChild(canvas);
+  // Adding the newly created element and its content into the DOM
+  const currentDiv = document.getElementById("div1");
+  document.body.insertBefore(canvasDiv, currentDiv);
+  canvas.width = WIDTH;
+  canvas.height = HEIGHT;
+  document.getElementById("chuck").style.width = canvas.width + 'px';
+  document.getElementById("chuck").style.height = canvas.height + 'px';
+  ctx = canvas.getContext('2d');
+  initialized = true;
 }
 
-// Creating a JS Class that allows you to create more objects from a 'template' using 'new'
-class cSquare {
-  constructor(w, h, x, y, vx, vy, c) {
+class Sprite {
+  constructor(w, h, x, y, c) {
     this.w = w;
-  this.h = h;
-  this.x = x;
-  this.y = y;
+    this.h = h;
+    this.x = x;
+    this.y = y;
+    this.color = c;
+    this.spliced = false;
+    }
+    collide(obj) {
+      if (this.x <= obj.x + obj.w &&
+        obj.x <= this.x + this.w &&
+        this.y <= obj.y + obj.h &&
+        obj.y <= this.y + this.h
+      ) {
+        console.log('collided with ' + obj);
+        return true;
+      }
+    }
+}
+
+class Player extends Sprite {
+  constructor(w, h, x, y, c, vx, vy) {
+  super(w, h, x, y, c, vx, vy);
   this.vx = vx;
   this.vy = vy;
-  this.color = c;
+  this.speed = 3;
   }
   moveinput() {
     if ('w' in keysDown || 'W' in keysDown) { // Player control
         this.vx = 0;
-        this.vy = -1;
+        this.vy = -this.speed;
         console.log('w!!!');
     } else if ('s' in keysDown || 'S' in keysDown) { // Player control
         this.vx = 0;
-        this.vy = 1;
+        this.vy = this.speed;
 
     } else if ('a' in keysDown || 'A' in keysDown) { // Player control
         this.vy = 0;
-        this.vx = -1;
+        this.vx = -this.speed;
 
     } else if ('d' in keysDown || 'D' in keysDown) { // Player control
         this.vy = 0;
-        this.vx = 1;
+        this.vx = this.speed;
     }
+    else{
+      this.vx = 0;
+      this.vy = 0;
+    }
+}
   update(){
-    // Drawing using variables
+    this.moveinput();
+    this.x += this.vx;
+    this.y += this.vy;
   }
   draw() {
     ctx.fillStyle = this.color;
@@ -109,39 +149,51 @@ class cSquare {
   }
 }
 
-// Creating a new object from an existing object oSquare
-let newSquare = Object.create(oSquare);
+class Mob extends Sprite {
+  constructor(w, h, x, y, c, vx, vy) {
+    super(w, h, x, y, c);
+    this.vx = vx;
+    this.vy = vy;
+    this.speed = 3;
+    }
+    update(){
+      this.x += this.vx;
+      this.y += this.vy;
+    }
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.strokeRect(this.x, this.y, this.w, this.h);
+    }
+}
 
-// Creating an instance of a constructor FUNCTION fSquare
-let oneSquare = new fSquare(25, 25, 0, 0, 0, 0, 'red');
-let twoSquare = new fSquare(25, 25, 150, 25, 0, 0, 'green');
-let threeSquare = new fSquare(25, 25, 0, 0, 0, 0, 'blue');
-let fourSquare = new CSquare(25, 25, 0, 0, 0, 0, 'blue');
+
+// Creating an instance of the class
+let player = new Player(25, 25, WIDTH/2, HEIGHT/2, 'red', 0, 0);
+
+// Adding two different sets of mobs to the mobs' array
+for (i = 0; i < 10; i++){
+  mobs.push(new Mob(60,60, 200, 100, 'pink', Math.random()*-2, Math.random()*-2));
+  console.log(mobs);
+}
+
+while (mobs.length < 20){
+  mobs.push(new Mob(10,10, 250, 200, 'purple', Math.random()*-2, Math.random()*-2));
+}
 
 
-// Creating an instance of  a class cSquare
-let anotherSquare = new CSquare(40, 40, 25, 25);
+// Getting the mouse position when clicked
+addEventListener('mousemove', e => {
+  mouseX = e.offsetX;
+  mouseY = e.offsetY;
+  // Using x and y variables for mouse position
+  mousePos = {
+    x: mouseX,
+    y: mouseY
+  };
+});
 
-
-let myCircle = {
-  r: 25,
-  w: 50,
-  h: 50,
-  x: 150,
-  y: 200,
-  vx: 0.1,
-  vy: 0.1,
-  color: 'grey',
-  draw: function () {
-    ctx.fillStyle = myCircle.color;
-    ctx.beginPath();
-    ctx.arc(myCircle.x, myCircle.y, myCircle.r, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.fill();
-  }
-};
-
-// Mouse position is found when clicked
+// Getting mouse position when clicked
 addEventListener('mousedown', mouseClick);
 
 function mouseClick(e) {
@@ -153,38 +205,8 @@ function mouseClick(e) {
     y: mouseClickY
   };
 }
-// Functions collide with variables a,b
-function collide(a, b) {
-  if (a.x <= b.x &&
-    b.x <= a.x + a.w &&
-    a.y <= b.y &&
-    b.y <= a.y + a.h
-  ) {
-    console.log('collided');
-    return true;
-  }
-}
 
-// Udates all the elements on the canvas
-function update(mod) {
-    if (collide(mySquare, mousePos)) {
-      mySquare.color = 'red';
-    }
-    else{
-      mySquare.color = 'orange';
-    }
-  mySquare.x += mySquare.vx * mod;
-  mySquare.y += mySquare.vy * mod;
-  if (mySquare.x + mySquare.w >= canvas.width || mySquare.x <= 0) {
-    mySquare.vx *= -1;
-    mySquare.color = 'blue';
-  }
-  if (mySquare.y + mySquare.h >= canvas.height || mySquare.y <= 0) {
-    mySquare.vy *= -1;
-    mySquare.color = 'green';
-  }
-
-// Draws text on the canvas
+// Drawing the text on the  canvas
 function drawText(color, font, align, base, text, x, y) {
   ctx.fillStyle = color;
   ctx.font = font;
@@ -193,12 +215,29 @@ function drawText(color, font, align, base, text, x, y) {
   ctx.fillText(text, x, y);
 }
 
-// Draws a square, circle, or rectangle
-function drawSquare() {
-  ctx.fillStyle = mySquare.color;
-  ctx.fillRect(mySquare.x, mySquare.y, mySquare.w, mySquare.h);
-  ctx.strokeRect(mySquare.x, mySquare.y, mySquare.w, mySquare.h);
+// ########## Updates all the elements on canvas ##########
+function update(mod) {
+  player.update();
+
+
+  // Updating all the mobs in a group
+  for (let m of mobs){
+    m.update();
+    if (player.collide(m)){
+      m.spliced = true
+    }
+    
+  }
+  for (let m in mobs){
+    if (mobs[m].spliced){
+      mobs.splice(m, 1);
+    }
+  }
+
 }
+
+// Draws all the stuff on the canvas that you want to draw
+function draw() {
 
 // function drawCircle() {
 //   ctx.fillStyle = myCircle.color;
