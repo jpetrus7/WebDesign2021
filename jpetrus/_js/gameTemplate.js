@@ -87,6 +87,7 @@ function init() {
   initialized = true;
 }
 
+// Creating a sprite
 class Sprite {
   constructor(w, h, x, y, c) {
     this.w = w;
@@ -132,15 +133,64 @@ class Player extends Sprite {
         this.vy = 0;
         this.vx = this.speed;
     }
+    else if (' ' in keysDown && this.canjump) { // Player control
+      console.log(this.canjump);
+      this.vy -= 45;
+      this.canjump = false;
+    }
     else{
       this.vx = 0;
       this.vy = 0;
     }
 }
+update(){
+  this.vy = GRAVITY;
+  this.moveinput();
+  if (!this.inbounds()){
+    if (this.x <= 0) {
+      this.x = 0;
+    }
+    if (this.x + this.w >= WIDTH) {
+      this.x = WIDTH-this.w;
+    }
+    if (this.y+this.h >= HEIGHT) {
+      this.y = HEIGHT-this.h;
+      this.canjump = true;
+    }
+    // alert('out of bounds');
+    // console.log('out of bounds');
+  }
+  
+  this.x += this.vx;
+  this.y += this.vy;
+}
+draw() {
+  ctx.fillStyle = this.color;
+  ctx.fillRect(this.x, this.y, this.w, this.h);
+  ctx.strokeRect(this.x, this.y, this.w, this.h);
+}
+}
+
+class Mob extends Sprite {
+constructor(w, h, x, y, c, vx, vy) {
+  super(w, h, x, y, c);
+  this.vx = vx;
+  this.vy = vy;
+  this.type = "normal";
+  }
   update(){
-    this.moveinput();
     this.x += this.vx;
     this.y += this.vy;
+    if (!this.inbounds()){
+      if (this.x < 0 || this.x > WIDTH) {
+        this.vx *= -1;
+      }
+      if (this.y < 0 || this.y > HEIGHT) {
+        this.vy *= -1;
+      }
+      // alert('out of bounds');
+      // console.log('out of bounds');
+    }
   }
   draw() {
     ctx.fillStyle = this.color;
@@ -149,54 +199,35 @@ class Player extends Sprite {
   }
 }
 
-class Mob extends Sprite {
-  constructor(w, h, x, y, c, vx, vy) {
-    super(w, h, x, y, c);
-    this.vx = vx;
-    this.vy = vy;
-    this.speed = 3;
-    }
-    update(){
-      this.x += this.vx;
-      this.y += this.vy;
-    }
-    draw() {
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.w, this.h);
-      ctx.strokeRect(this.x, this.y, this.w, this.h);
-    }
-}
-
-
 // Creating an instance of the class
 let player = new Player(25, 25, WIDTH/2, HEIGHT/2, 'red', 0, 0);
 
-// Adding two different sets of mobs to the mobs' array
+// Adding two different sets of mobs to the mobs array
 for (i = 0; i < 10; i++){
-  mobs.push(new Mob(60,60, 200, 100, 'pink', Math.random()*-2, Math.random()*-2));
-  console.log(mobs);
+mobs.push(new Mob(60,60, 200, 100, 'pink', Math.random()*-2, Math.random()*-2));
+console.log(mobs);
 }
 
 while (mobs.length < 20){
-  mobs.push(new Mob(10,10, 250, 200, 'purple', Math.random()*-2, Math.random()*-2));
+mobs.push(new Mob(10,10, 250, 200, 'purple', Math.random()*-2, Math.random()*-2));
 }
 
+// Creating an object bt pressing keys
 
-// Getting the mouse position when clicked
-addEventListener('mousemove', e => {
-  mouseX = e.offsetX;
-  mouseY = e.offsetY;
-  // Using x and y variables for mouse position
-  mousePos = {
-    x: mouseX,
-    y: mouseY
-  };
-});
+let keysDown = {};
+
+addEventListener("keydown", function (e) {
+  keysDown[e.key] = true;
+}, false);
+
+addEventListener("keyup", function (e) {
+  delete keysDown[e.key];
+}, false);
 
 // Getting mouse position when clicked
 addEventListener('mousedown', mouseClick);
 
-function mouseClick(e) {
+function mouseClick(e) {  
   console.log(`Screen X/Y: ${e.screenX}, ${e.screenY}, Client X/Y: ${e.clientX}, ${e.clientY}`);
   mouseClickX = e.clientX;
   mouseClickY = e.clientY;
