@@ -20,7 +20,7 @@ class MemoryGame {
 			}, 400);
 		})
 	}
-
+	// Shuffling and checking the cards
 	checkAllCards() {
 		if (!this.cards.every(card => card.classList.contains('has-match'))) return;
 		
@@ -37,5 +37,40 @@ class MemoryGame {
 			this.cardsContainer.classList.remove('no-event');
 		}, this.duration);
 	}
+	// Detetcts if cards are the same or not by using a class
+	checkIfMatched(firstCard, secondCard) {
+		if (firstCard.dataset.animal === secondCard.dataset.animal) {
+			firstCard.classList.remove('flipped');
+			secondCard.classList.remove('flipped');
 
-	
+			firstCard.classList.add('has-match');
+			secondCard.classList.add('has-match');
+			
+			this.checkAllCards();
+		}
+		else {
+			setTimeout(() => {
+				firstCard.classList.remove('flipped');
+				secondCard.classList.remove('flipped');
+			}, this.duration);
+		}
+	}
+	// If statement to decide whether or not the cards match
+	flip(selectedCard) {
+		selectedCard.classList.add('flipped');
+
+		const flippedCards = this.cards.filter(card => card.classList.contains('flipped'));
+
+		if (flippedCards.length === 2) {
+			this.stopEvent();
+			this.checkIfMatched(flippedCards[0], flippedCards[1]);
+		}
+	}
+
+}
+
+const game = new MemoryGame;
+
+game.cards.forEach(card => {
+	card.addEventListener('click', game.flip.bind(game, card));
+})
