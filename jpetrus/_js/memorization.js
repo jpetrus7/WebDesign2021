@@ -1,3 +1,6 @@
+// sources
+// https://codepen.io/jstarnate/pen/QoagLr
+
 // Memory game to find the two same animals
 class MemoryGame {
 
