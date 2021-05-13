@@ -1,7 +1,8 @@
 // sources
 // https://codepen.io/jstarnate/pen/QoagLr
+// I commented out this code to show that I understand how the code works
 
-// Memory game to find the two same animals
+// Memory game to find the two same animals by using class
 class MemoryGame {
 
     // The contrustor comes in place
@@ -11,7 +12,7 @@ class MemoryGame {
 		this.cards = Array.from(this.cardsContainer.children);
 	}
 
-    // The cards are mixed up so everything is random
+    // The cards are mixed up so everything is random using randomNumber
 	shuffleCards() {
 		this.cards.forEach(card => {
 			const randomNumber = Math.floor(Math.random() * this.cards.length) + 1;
@@ -23,7 +24,7 @@ class MemoryGame {
 			}, 400);
 		})
 	}
-	// Shuffling and checking the cards
+	// Shuffling and checking the cards using if statements
 	checkAllCards() {
 		if (!this.cards.every(card => card.classList.contains('has-match'))) return;
 		
