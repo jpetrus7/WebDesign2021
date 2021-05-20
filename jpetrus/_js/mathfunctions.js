@@ -36,5 +36,5 @@ while(true){
         print(float(Var1) * float(Var1) * float(Var1))
     }
 
-
+// I added two new functions to my math functions code. I got stuck and did not realize I was stuck until now. Although I had a lot of work near the end of the year, I should make sure to be careful and not get stuck. Next time, I will make sure to understand everything earlier on so something like this does not happen.
 }
