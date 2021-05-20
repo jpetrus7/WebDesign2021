@@ -9,7 +9,7 @@ while(true){
     var Var2 = prompt('What is the 2nd number to input');
 
 // Input for the scenerios to equate to vlaues of youur choice
-    var Operation = prompt("Which mathematical operation would you like to do to those 2 numbers? You can 'add', 'subtract', 'multiply', 'divide', or 'sqaure'.");
+    var Operation = prompt("Which mathematical operation would you like to do to those 2 numbers? You can 'add', 'subtract', 'multiply', 'divide', 'sqaured' or 'cubed'.");
 
 // Different scenrios used for different scenerios
     if(Operation == "add"){
@@ -28,8 +28,12 @@ while(true){
         print(float(Var1) / float(Var2))
     }
 
-    if(Operation == "square"){
+    if(Operation == "squared"){
         print(float(Var1) * float(Var1))
+    }
+
+    if(Operation == "cubed"){
+        print(float(Var1) * float(Var1) * float(Var1))
     }
 
 
