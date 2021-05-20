@@ -1,4 +1,4 @@
-
+// Version 2.0
 let player;
 let mouseCoords = [];
 

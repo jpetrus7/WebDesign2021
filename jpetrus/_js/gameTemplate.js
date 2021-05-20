@@ -1,6 +1,8 @@
 //sources
 // https://eloquentjavascript.net/code/chapter/17_canvas.js
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event
+// Version 2.0
+
 
 //Initialize GLOBAL variables to create a canvas
 let canvasDiv;

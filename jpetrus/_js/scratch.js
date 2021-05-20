@@ -1,4 +1,6 @@
 // Scratch for programmers
+// Version 2.0
+
 
 let cpu =  ["rock", "paper", "scissors"];
 

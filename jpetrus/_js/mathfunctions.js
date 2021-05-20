@@ -1,5 +1,6 @@
 // Created by Joshua Petrus
 // Using math functions in as little lines as I could
+// Version 2.0
 
 // Code that will use math to answer a function
 

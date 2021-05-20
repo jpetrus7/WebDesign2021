@@ -5,6 +5,8 @@
 // alert(myNum);
 // myNum = 25;
 // alert(myNum);
+// Version 2.0
+
 
 // Add a canvas to the page
 
